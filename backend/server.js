@@ -3,6 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const scrapeCropPrices = require("./scrape"); // Import scraper
+const { spawn } = require('child_process');
+const path = require('path');
 
 const app = express();
 app.use(cors());
@@ -24,6 +26,16 @@ const CropPriceSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now }
 });
 
+const PredictionSchema = new mongoose.Schema({
+    crop: String,
+    season: String,
+    months: Number,
+    currentPrice: Number,
+    predictedPrice: Number,
+    date: { type: Date, default: Date.now }
+});
+
+const Prediction = mongoose.model("Prediction", PredictionSchema);
 const CropPrice = mongoose.model("CropPrice", CropPriceSchema);
 
 // Scrape and Store Data in MongoDB
@@ -106,6 +118,66 @@ app.get("/get-price", async (req, res) => {
     }
 });
 
+app.post("/predict-price", async (req, res) => {
+    const { crop, season, months, currentPrice } = req.body;
+
+    if (!crop || !season || !months || !currentPrice) {
+        return res.status(400).json({ 
+            message: "Missing required parameters" 
+        });
+    }
+
+    try {
+        // Convert months to years for the ML model
+        const timeYears = months / 12;
+
+        // Spawn Python process
+        const pythonProcess = spawn('python', [
+            path.join(__dirname, 'predict.py'),
+            crop,
+            season,
+            timeYears.toString(),
+            currentPrice.toString()
+        ]);
+
+        let predictionResult = '';
+
+        pythonProcess.stdout.on('data', (data) => {
+            predictionResult += data.toString();
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`Python Error: ${data}`);
+        });
+
+        pythonProcess.on('close', async (code) => {
+            if (code !== 0) {
+                return res.status(500).json({ 
+                    message: "Prediction failed" 
+                });
+            }
+
+            const predictedPrice = parseFloat(predictionResult);
+
+            // Store prediction in database
+            const prediction = new Prediction({
+                crop,
+                season,
+                months,
+                currentPrice,
+                predictedPrice
+            });
+            await prediction.save();
+
+            res.json({ predictedPrice });
+        });
+    } catch (error) {
+        console.error("Prediction error:", error);
+        res.status(500).json({ 
+            message: "Error making prediction" 
+        });
+    }
+});
 
 // Start Server
 const PORT = process.env.PORT || 5000;
