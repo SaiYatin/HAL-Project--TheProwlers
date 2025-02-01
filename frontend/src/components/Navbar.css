@@ -1,0 +1,71 @@
+/* Navbar container style */
+.navbar {
+    background-color: #2f7e53; /* Dark green to complement the header */
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    /* Rounded corners for a softer look */
+}
+
+/* Navbar list styling */
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Navbar list items styling */
+.navbar li {
+    margin: 0 1.5rem; /* Space between navbar items */
+}
+
+/* Navbar links styling */
+.navbar a {
+    text-decoration: none;
+    color: #f1f1f1; /* Light grey text for readability */
+    font-size: 1rem; /* Smaller font size */
+    font-weight: 500; /* Lighter weight for clarity */
+    text-transform: uppercase; /* Uppercase for uniformity */
+    letter-spacing: 1px; /* Space between the letters */
+    padding: 5px 0; /* Vertical padding for spacing */
+    transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+    
+    /* Gradient effect for text */
+    background: linear-gradient(45deg, #ff6f61, #d4f1e2);
+    background-clip: text;
+    color: transparent; /* Hide original color and show gradient */
+}
+
+/* Navbar link hover effect */
+.navbar a:hover {
+    text-shadow: 0 0 10px rgba(56, 161, 105, 0.8), 0 0 15px rgba(255, 255, 255, 0.6); /* Glowing green effect */
+    transform: scale(1.05); /* Slightly enlarge the link on hover */
+    color: #f1f1f1; /* Keep the text color white while glowing */
+}
+
+/* Distinction between navbar items */
+.navbar a:not(:last-child)::after {
+    content: '|'; /* Vertical bar separator */
+    margin-left: 1rem;
+    color: #f1f1f1; /* Light grey separator */
+    font-size: 1.5rem; /* Slightly larger separator */
+}
+
+/* Active link effect */
+.navbar a:active {
+    color: #276746; /* Dark green when the link is active */
+    text-shadow: 0 0 10px rgba(56, 161, 105, 0.8); /* Glowing effect on active link */
+}
+
+/* Responsive Navbar Styling */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column; /* Stack navbar items vertically on small screens */
+    }
+
+    .navbar li {
+        margin: 1rem 0; /* Add space between items in the stacked layout */
+    }
+}

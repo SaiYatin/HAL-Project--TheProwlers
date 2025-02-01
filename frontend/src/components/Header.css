@@ -1,0 +1,53 @@
+/* Header container style */
+.header-container {
+    background-color: #276746; /* Dark green to complement navbar */
+    padding: 20px;
+    display: flex; /* Flexbox for horizontal layout */
+    align-items: center; /* Vertically center the content */
+    justify-content: flex-start; /* Align content to the left */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Logo container: aligns logo and title horizontally */
+.logo-container {
+    display: flex; /* Flexbox for horizontal layout */
+    align-items: center; /* Vertically align items */
+    gap: 15px; /* Space between the logo and title */
+}
+
+/* Logo styling */
+.logo img {
+    width: 50px; /* Fixed width */
+    height: 50px; /* Fixed height */
+    background-color: #38a169; /* Matching accent color for logo */
+    border-radius: 50%; /* Circular logo */
+    object-fit: cover; /* Ensure logo maintains aspect ratio */
+}
+
+/* Title (h1) styling */
+/* Title (h1) styling */
+h1 {
+    font-size: 3rem; /* Make the title larger for emphasis */
+    font-family: 'Pacifico', cursive; /* Fun, cursive font for flair */
+    color: #f1f1f1; /* Light grey text for readability */
+    margin: 0; /* Remove default margin */
+    font-weight: 700; /* Make the title bolder */
+    text-transform: uppercase; /* Uppercase letters for a more dramatic effect */
+    
+    /* Gradient effect for the title text */
+    background: linear-gradient(45deg, #ff6f61, #38a169, #f1f1f1);
+    background-clip: text;
+    color: transparent; /* Hide the original color to show the gradient */
+
+    /* Add text shadow for extra emphasis */
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+    
+    /* Smooth transition for hover effect */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect to make the title interactive */
+h1:hover {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6); /* Glowing effect on hover */
+    transform: scale(1.1); /* Slightly enlarge the title on hover */
+}

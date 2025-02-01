@@ -1,0 +1,41 @@
+/* Footer container style */
+.footer {
+    background-color: #276746; /* Dark green to complement the header and navbar */
+    color: #f1f1f1; /* Light grey text */
+    text-align: center; /* Center text in the footer */
+    padding: 20px 0; /* Vertical padding */
+    font-size: 1.1rem; /* Adjust font size to match navbar */
+    font-weight: 500; /* Match the font weight of navbar */
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow at the top */
+}
+
+/* Footer text link style */
+.footer a {
+    text-decoration: none; /* Remove underlines from links */
+    font-size: 1.1rem; /* Same font size as navbar */
+    font-weight: 500; /* Same font weight as navbar */
+    text-transform: uppercase; /* Uppercase text for uniformity */
+    letter-spacing: 1px; /* Space between the letters */
+    padding: 5px 0; /* Vertical padding for spacing */
+
+    /* Initial Gradient effect for text */
+    background: linear-gradient(45deg, #ff6f61, #d4f1e2); /* Gradient from coral to light green */
+    background-clip: text; /* Apply background gradient to text */
+    color: transparent; /* Make text transparent to show gradient */
+    
+    transition: background 0.5s ease-in-out; /* Smooth transition for the gradient */
+}
+
+/* Footer text link hover effect */
+.footer a:hover {
+    background: linear-gradient(45deg, #38a169, #ff6f61); /* Change gradient on hover */
+    background-clip: text; /* Ensure background clips to text on hover */
+    color: transparent; /* Ensure the text remains transparent to show the gradient */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .footer {
+        padding: 15px 0; /* Less padding on smaller screens */
+    }
+}

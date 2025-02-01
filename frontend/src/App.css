@@ -1,0 +1,29 @@
+/* Basic Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Content Container: Adds space between Navbar and Footer */
+.content-container {
+    flex: 1; /* Takes remaining space between Navbar and Footer */
+    padding: 2rem;
+    opacity: 0.8;
+}
+
+/* Optional: Some styling for body background */
+body {
+    background-color: #f4f4f9;
+}
+
+/* Adding a background image to the entire page */
+body {
+    background-image: url('C:\Users\tarun\OneDrive\Desktop\The-Prowlers-main\The-Prowlers-main\frontend\public\farmland.jpg'); /* Replace with your image URL */
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Ensures the image doesn’t repeat */
+}

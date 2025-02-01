@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
+import './CheckCropPrices.css';
 
 const crops = [
   "Bangalore Tomato", "Beans", "Beetroot", "Bitter Gourd", "Bottle Gourd", "Brinjal", "Broad Beans",
@@ -50,34 +51,36 @@ const CheckCropPrice = () => {
 };
 
   return (
-    <div>
-      <h2>Check Crop Price</h2>
-      
-      <label>Crop: </label>
-      <select value={crop} onChange={(e) => setCrop(e.target.value)}>
-        <option value="">Select Crop</option>
-        {crops.map((c, index) => <option key={index} value={c}>{c}</option>)}
-      </select>
+    <div className="check-crop-price-container">
+      <div className="card">
+        <h2>Check Crop Price</h2>
+        
+        <label>Crop: </label>
+        <select value={crop} onChange={(e) => setCrop(e.target.value)}>
+          <option value="">Select Crop</option>
+          {crops.map((c, index) => <option key={index} value={c}>{c}</option>)}
+        </select>
 
-      <label> City: </label>
-      <select value={city} onChange={(e) => setCity(e.target.value)}>
-        <option value="">Select City</option>
-        {cities.map((c, index) => <option key={index} value={c}>{c}</option>)}
-      </select>
+        <label> City: </label>
+        <select value={city} onChange={(e) => setCity(e.target.value)}>
+          <option value="">Select City</option>
+          {cities.map((c, index) => <option key={index} value={c}>{c}</option>)}
+        </select>
 
-      <label> Months Ahead: </label>
-      <select value={months} onChange={(e) => setMonths(parseInt(e.target.value))}>
-        {monthsOptions.map((m) => <option key={m} value={m}>{m} months</option>)}
-      </select>
+        <label> Months Ahead: </label>
+        <select value={months} onChange={(e) => setMonths(parseInt(e.target.value))}>
+          {monthsOptions.map((m) => <option key={m} value={m}>{m} months</option>)}
+        </select>
 
-      <button onClick={fetchPrice}>Check Price</button>
+        <button onClick={fetchPrice}>Check Price</button>
 
-      {price && (
-        <div>
-          <p>Current Price: <strong>{price}</strong></p>
-          <p>Predicted Price (in {months} months): <strong>₹ {predictedPrice}</strong></p>
-        </div>
-      )}
+        {price && (
+          <div className="price-info">
+            <p>Current Price: <strong>{price}</strong></p>
+            <p>Predicted Price (in {months} months): <strong>₹ {predictedPrice}</strong></p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
