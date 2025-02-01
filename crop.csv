@@ -1,0 +1,16 @@
+Crop,Growing Season,Region,Planting Time,Harvest Time,Climate Requirements,Soil Type
+Rice (Kharif),Monsoon,South Asia,"June-July","November-December",Hot and humid,Clay loam
+Wheat,Rabi,Northern Plains,"October-November","March-April",Cool winters,Loamy soil
+Maize,Kharif,Central Region,"June-July","September-October",Warm and moist,Well-drained loamy
+Cotton,Kharif,Western Region,"May-June","November-December",Hot and dry,Black cotton soil
+Sugarcane,Year-round,Tropical regions,"March-May","January-March",Tropical climate,Deep rich loam
+Potato,Rabi,Temperate regions,"September-October","January-February",Cool climate,Sandy loam
+Soybean,Kharif,Central highlands,"June-July","September-October",Moderate rainfall,Well-drained soil
+Mustard,Rabi,Northern plains,"September-October","February-March",Cool and dry,Light loamy
+Groundnut,Kharif,Coastal regions,"June-July","October-November",Warm and humid,Sandy loam
+Pulses (Lentils),Rabi,Central plains,"October-November","February-March",Moderate climate,Well-drained loamy
+Chickpea,Rabi,Semi-arid regions,"October-November","March-April",Cool and dry,Sandy loam
+Jute,Kharif,Eastern region,"March-April","July-August",Hot and humid,Well-drained alluvial
+Barley,Rabi,Northern regions,"October-November","March-April",Cool climate,Well-drained loamy
+Millet,Kharif,Arid regions,"June-July","September-October",Drought resistant,Sandy soil
+Peas,Rabi,Temperate regions,"October-November","February-March",Cool climate,Loamy soil
