@@ -3,13 +3,16 @@ const puppeteer = require("puppeteer");
 const URL = "https://www.oneindia.com/vegetables-price.html";
 
 async function scrapeCropPrices() {
+    console.log("🌍 Launching Puppeteer browser...");
     const browser = await puppeteer.launch({ headless: false, slowMo: 50 }); // Debugging enabled
     const page = await browser.newPage();
 
     try {
+        console.log(`🔍 Navigating to ${URL}`);
         await page.goto(URL, { waitUntil: "networkidle2", timeout: 60000 });
 
         // Extract crop buttons
+        console.log("📌 Extracting crop links...");
         const cropLinks = await page.evaluate(() => {
             const baseUrl = "https://www.oneindia.com";
             return Array.from(document.querySelectorAll("a"))
@@ -21,13 +24,13 @@ async function scrapeCropPrices() {
                 .filter(item => item.name !== "N/A" && item.url);
         });
 
-        console.log("✅ Found Crop Links:", cropLinks);
+        console.log(`✅ Found ${cropLinks.length} crop links!`);
 
         // Loop through each crop link and scrape data
         const allCropPrices = [];
 
         for (const crop of cropLinks) {
-            console.log(`🌐 Navigating to: ${crop.url}`);
+            console.log(`🌱 Scraping data for ${crop.name}...`);
 
             try {
                 await page.goto(crop.url, { waitUntil: "networkidle2", timeout: 60000 });
@@ -52,8 +55,8 @@ async function scrapeCropPrices() {
                     });
                 });
 
-                console.log(`📊 Scraped ${crop.name} data:`, cropPrices);
-                allCropPrices.push({ crop: crop.name, data: cropPrices });
+                console.log(`✅ Scraped ${cropPrices.length} records for ${crop.name}`);
+                allCropPrices.push(...cropPrices.map(data => ({ crop: crop.name, ...data })));
 
             } catch (navError) {
                 console.error(`❌ Failed to scrape ${crop.name}:`, navError);
@@ -61,7 +64,7 @@ async function scrapeCropPrices() {
         }
 
         await browser.close();
-        console.log("📊 Final Scraped Data:", allCropPrices);
+        console.log(`📊 Scraping complete! Total records scraped: ${allCropPrices.length}`);
         return allCropPrices;
 
     } catch (error) {
@@ -70,8 +73,5 @@ async function scrapeCropPrices() {
         return [];
     }
 }
-
-// Test Scraper
-scrapeCropPrices().then(data => console.log("✅ Done!", data));
 
 module.exports = scrapeCropPrices;
