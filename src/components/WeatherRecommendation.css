@@ -1,0 +1,105 @@
+/* Weather Recommendation Container */
+.weather-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.weather-container h2 {
+    font-family: 'Poppins', sans-serif;
+    color: #2d6a4f;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.weather-container label {
+    font-size: 1.1rem;
+    color: #4c6b4c;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    display: block;
+}
+
+.weather-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    transition: border 0.3s ease;
+}
+
+.weather-container input:focus {
+    outline: none;
+    border: 1px solid #38a169;
+}
+
+.weather-container button {
+    background-color: #38a169;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+.weather-container button:hover {
+    background-color: #2f7e53;
+    transform: scale(1.05);
+}
+
+.weather-container button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.3);
+}
+
+/* Weather Info Section */
+.weather-info {
+    margin-top: 2rem;
+    background-color: #eaf7e1;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #d1e7d4;
+    text-align: left;
+}
+
+.weather-info p {
+    font-size: 1.1rem;
+    color: #3a4a37;
+    margin: 5px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .weather-container {
+        padding: 1.5rem;
+    }
+
+    .weather-container h2 {
+        font-size: 1.8rem;
+    }
+
+    .weather-container input {
+        font-size: 1rem;
+    }
+
+    .weather-container button {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    .weather-info p {
+        font-size: 1rem;
+    }
+}

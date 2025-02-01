@@ -1,0 +1,116 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f8f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure the content fills the screen */
+    flex-direction: column;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #2d6a4f;
+}
+
+/* Wrapper to center content */
+#root {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* App Layout Container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.app-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #2d6a4f;
+}
+
+.app-container p {
+    font-size: 1.2rem;
+    color: #4c6b4c;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+button {
+    background-color: #38a169;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: 600;
+}
+
+button:hover {
+    background-color: #2f7e53;
+    transform: scale(1.05);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.3);
+}
+
+/* Footer */
+footer {
+    background-color: #2d6a4f;
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+/* Links in Footer */
+footer a {
+    color: #f1f8f4;
+    font-weight: bold;
+}
+
+footer a:hover {
+    color: #38a169;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 20px;
+    }
+
+    .app-container h1 {
+        font-size: 2rem;
+    }
+
+    .app-container p {
+        font-size: 1rem;
+    }
+}

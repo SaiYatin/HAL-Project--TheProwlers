@@ -1,0 +1,90 @@
+/* GovernmentSchemes.css */
+
+/* Container for the entire section */
+.schemes-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: linear-gradient(135deg, #eaf7e1, #ffffff);
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Page Title Styling */
+.page-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    color: #2d6a4f;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Subtitle or description styling */
+.sub-text {
+    font-size: 1.1rem;
+    color: #3a4a37;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* List container for scheme cards */
+.schemes-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* Individual scheme card styling */
+.scheme-card {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(45% - 1rem);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.scheme-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.scheme-card h3 {
+    font-size: 1.3rem;
+    color: #2d6a4f;
+    margin-bottom: 0.5rem;
+}
+
+.scheme-card p {
+    font-size: 1rem;
+    color: #4c6b4c;
+    line-height: 1.6;
+}
+
+/* Button styling */
+.show-more-btn {
+    display: block;
+    background-color: #38a169;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    margin: 2rem auto 0;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.show-more-btn:hover {
+    background-color: #2f7e53;
+    transform: scale(1.05);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .scheme-card {
+        flex: 1 1 100%;
+    }
+}

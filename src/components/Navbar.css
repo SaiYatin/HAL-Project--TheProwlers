@@ -1,0 +1,34 @@
+/* Navbar.css */
+.navbar {
+    position: fixed;         /* Fix the navbar to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ddd;        /* Light background */
+    padding: 15px 30px;      /* Adjust padding as needed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    z-index: 1000;           /* Ensure it appears on top of other elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar a {
+    color: #2d6a4f;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #38a169;
+    transform: translateY(-2px);
+}
+
+/* Optional: Style the separator */
+.navbar span {
+    color: #2d6a4f;
+    margin: 0 5px;
+}
