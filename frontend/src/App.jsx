@@ -8,6 +8,8 @@ import WeatherRecommendation from "./components/WeatherRecommendation";
 import GovernmentSchemes from "./components/GovernmentSchemes";
 import Footer from "./components/Footer";  // Import Footer component
 import './App.css';
+import HomePage from "./components/Homepage"; // Import HomePage component
+import LanguageTranslator from "./components/translate"; // Import LanguageTranslator component
 
 function App() {
     return (
@@ -19,11 +21,18 @@ function App() {
                 <Navbar /> {/* Navbar below Header */}
                 <div className="content-container">
                     <Routes>
+                        {/* Define route for the homepage */}
+                        <Route path="/" element={<HomePage />} /> {/* Homepage route */}
+                        
+                        {/* Other routes */}
                         <Route path="/check-crop-price" element={<CheckCropPrice />} />
                         <Route path="/trends" element={<Trends />} />
                         <Route path="/sell-crop" element={<SellCrop />} />
                         <Route path="/weather-recommendation" element={<WeatherRecommendation />} />
                         <Route path="/government-schemes" element={<GovernmentSchemes />} />
+                        
+                        {/* Add route for the language translator */}
+                        <Route path="/translate" element={<LanguageTranslator />} />
                     </Routes>
                 </div>
                 <Footer /> {/* Footer at the bottom */}

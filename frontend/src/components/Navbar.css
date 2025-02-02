@@ -1,10 +1,12 @@
 /* Navbar container style */
 .navbar {
     background-color: #2f7e53; /* Dark green to complement the header */
-    padding: 1rem;
+    padding: 1rem 2rem; /* Added more padding for spacing */
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    /* Rounded corners for a softer look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Navbar list styling */
@@ -14,6 +16,7 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
+    flex-wrap: nowrap; /* Prevent items from wrapping into multiple rows */
 }
 
 /* Navbar list items styling */
@@ -25,11 +28,11 @@
 .navbar a {
     text-decoration: none;
     color: #f1f1f1; /* Light grey text for readability */
-    font-size: 1rem; /* Smaller font size */
+    font-size: 1.1rem; /* Slightly larger font size */
     font-weight: 500; /* Lighter weight for clarity */
     text-transform: uppercase; /* Uppercase for uniformity */
     letter-spacing: 1px; /* Space between the letters */
-    padding: 5px 0; /* Vertical padding for spacing */
+    padding: 10px 0; /* Vertical padding for spacing */
     transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
     
     /* Gradient effect for text */
@@ -60,12 +63,57 @@
 }
 
 /* Responsive Navbar Styling */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 1rem 1.5rem; /* Less padding for smaller screens */
+    }
+
+    .navbar ul {
+        flex-wrap: nowrap; /* Ensure items stay in one row */
+    }
+
+    .navbar li {
+        margin: 0 1rem; /* Slightly less margin for smaller items */
+    }
+
+    .navbar a {
+        font-size: 1rem; /* Slightly smaller font size */
+    }
+}
+
 @media (max-width: 768px) {
     .navbar ul {
         flex-direction: column; /* Stack navbar items vertically on small screens */
+        text-align: left; /* Align items to the left */
+        padding-left: 0;
     }
 
     .navbar li {
         margin: 1rem 0; /* Add space between items in the stacked layout */
+    }
+
+    /* Optional: Add a hamburger menu for smaller screens */
+    .hamburger {
+        display: block; /* Show hamburger for smaller screens */
+        background-color: #2f7e53;
+        padding: 10px;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .navbar ul {
+        display: none; /* Hide navbar items by default on small screens */
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .navbar.active ul {
+        display: block; /* Show the navbar items when active */
+    }
+
+    .navbar li {
+        margin: 1rem 0;
     }
 }

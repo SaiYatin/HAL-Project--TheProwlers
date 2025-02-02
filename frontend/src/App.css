@@ -5,14 +5,23 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100vh; /* Ensures the body takes at least the height of the viewport */
 }
 
-/* Content Container: Adds space between Navbar and Footer */
+/* Main container that holds the entire layout */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Full height of the parent container */
+    min-height: 100vh; /* Ensures the container takes at least the height of the viewport */
+}
+
+/* Content Container: Takes remaining space between Navbar and Footer */
 .content-container {
     flex: 1; /* Takes remaining space between Navbar and Footer */
     padding: 2rem;
     opacity: 0.8;
+    overflow-y: auto; /* Allows content to scroll if it exceeds the viewport height */
 }
 
 /* Optional: Some styling for body background */
@@ -22,8 +31,18 @@ body {
 
 /* Adding a background image to the entire page */
 body {
-    background-image: url('C:\Users\tarun\OneDrive\Desktop\The-Prowlers-main\The-Prowlers-main\frontend\public\farmland.jpg'); /* Replace with your image URL */
+    background-image: url('farmland.jpg'); /* Replace with your image URL */
     background-size: cover; /* Ensures the image covers the entire page */
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Ensures the image doesn’t repeat */
+}
+
+/* Footer Styling - Ensure it stays at the bottom only if content is not enough */
+footer {
+    background-color: rgba(0, 0, 0, 0.8); /* Dark footer background */
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    margin-top: auto; /* Push footer to the bottom when content is not enough */
 }

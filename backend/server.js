@@ -3,8 +3,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const scrapeCropPrices = require("./scrape"); // Import scraper
-const { spawn } = require('child_process');
-const path = require('path');
+const path = require("path");
+const { PythonShell } = require("python-shell"); 
+const fs = require("fs"); // Make sure this is installed // Make sure this is imported
 
 const app = express();
 app.use(cors());
@@ -17,7 +18,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("✅ MongoDB connected successfully"))
     .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// Define Mongoose Schema
+// Define Mongoose Schemas
 const CropPriceSchema = new mongoose.Schema({
     crop: String,
     city: String,
@@ -97,20 +98,22 @@ app.get("/prices", async (req, res) => {
     }
 });
 
+// Get Single Crop Price
+// Fetch Single Crop Price (GET request instead of POST)
 app.get("/get-price", async (req, res) => {
-    const { crop, city } = req.query;
-    
+    const { crop, city } = req.query;  // Get parameters from query string
+  
     if (!crop || !city) {
         return res.status(400).json({ message: "Crop and city are required." });
     }
-
+  
     try {
         const priceData = await CropPrice.findOne({ crop, city }).sort({ date: -1 });
-
+    
         if (!priceData) {
             return res.json({ price: "Not Available" });
         }
-
+    
         res.json({ price: priceData.price });
     } catch (error) {
         console.error("❌ Error fetching crop price:", error);
@@ -118,67 +121,98 @@ app.get("/get-price", async (req, res) => {
     }
 });
 
+// Modified predict-price endpoint in server.js
 app.post("/predict-price", async (req, res) => {
+    console.log("📩 Request Body:", req.body);
+    
     const { crop, season, months, currentPrice } = req.body;
-
     if (!crop || !season || !months || !currentPrice) {
         return res.status(400).json({ 
-            message: "Missing required parameters" 
+            message: "Missing required parameters",
+            received: { crop, season, months, currentPrice }
         });
     }
 
     try {
-        // Convert months to years for the ML model
-        const timeYears = months / 12;
+        // Configure Python Shell options with better error handling
+        const options = {
+            mode: "text",  // Changed from json to text
+            pythonOptions: ["-u"],
+            scriptPath: path.join(__dirname),
+            args: [JSON.stringify({ crop, season, months, currentPrice })]
+        };
 
-        // Spawn Python process
-        const pythonProcess = spawn('python', [
-            path.join(__dirname, 'predict.py'),
+        // Create a promise wrapper with timeout
+        const runPythonScript = () => {
+            return new Promise((resolve, reject) => {
+                const pythonProcess = new PythonShell("predict.py", options);
+                let outputData = "";
+                let errorData = "";
+
+                // Collect stdout data
+                pythonProcess.on('message', function (message) {
+                    outputData += message;
+                });
+
+                // Collect stderr data
+                pythonProcess.stderr.on('data', function (data) {
+                    errorData += data.toString();
+                    console.log("Python stderr:", data.toString());
+                });
+
+                // Handle completion
+                pythonProcess.end(function (err, code, signal) {
+                    if (err) {
+                        console.error("Python Script Error:", err);
+                        console.error("Error Output:", errorData);
+                        reject(err);
+                    } else {
+                        try {
+                            const result = JSON.parse(outputData);
+                            resolve(result);
+                        } catch (parseError) {
+                            console.error("Failed to parse Python output:", outputData);
+                            reject(parseError);
+                        }
+                    }
+                });
+
+                // Set timeout
+                setTimeout(() => {
+                    pythonProcess.terminate();
+                    reject(new Error("Prediction timeout after 30 seconds"));
+                }, 30000);
+            });
+        };
+
+        const prediction = await runPythonScript();
+        console.log("✅ Prediction Result:", prediction);
+        
+        if (!prediction || !prediction.predictedPrice) {
+            throw new Error("Invalid prediction result");
+        }
+
+        // Store prediction in database
+        const newPrediction = new Prediction({
             crop,
             season,
-            timeYears.toString(),
-            currentPrice.toString()
-        ]);
-
-        let predictionResult = '';
-
-        pythonProcess.stdout.on('data', (data) => {
-            predictionResult += data.toString();
+            months,
+            currentPrice,
+            predictedPrice: prediction.predictedPrice
         });
+        await newPrediction.save();
+        
+        res.json(prediction);
 
-        pythonProcess.stderr.on('data', (data) => {
-            console.error(`Python Error: ${data}`);
-        });
-
-        pythonProcess.on('close', async (code) => {
-            if (code !== 0) {
-                return res.status(500).json({ 
-                    message: "Prediction failed" 
-                });
-            }
-
-            const predictedPrice = parseFloat(predictionResult);
-
-            // Store prediction in database
-            const prediction = new Prediction({
-                crop,
-                season,
-                months,
-                currentPrice,
-                predictedPrice
-            });
-            await prediction.save();
-
-            res.json({ predictedPrice });
-        });
     } catch (error) {
-        console.error("Prediction error:", error);
+        console.error("❌ Prediction Error:", error.stack || error);
         res.status(500).json({ 
-            message: "Error making prediction" 
+            message: "Error making prediction", 
+            error: error.message,
+            details: errorData || "Check server logs for details"
         });
     }
 });
-
-// Start Server
+// Start Server using PORT from environment variable or default to 5000
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
