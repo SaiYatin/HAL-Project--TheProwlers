@@ -11,6 +11,7 @@ const Trends = () => {
     const [months, setMonths] = useState(6);
     const [priceData, setPriceData] = useState([]);
     const [predictedPrice, setPredictedPrice] = useState(null);
+    const [error, setError] = useState(null);
 
     const crops = ["Tomato", "Onion", "Wheat", "Rice", "Potato"];
 
@@ -22,20 +23,30 @@ const Trends = () => {
 
     const fetchPrediction = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/predict-price?crop=${crop}&months=${months}`);
-            setPredictedPrice(response.data.predicted_price);
-            setPriceData(response.data.trend);
+            const response = await axios.get(`http://127.0.0.1:5000/predict-price?crop=${crop}&months=${months}`);
+            console.log("API Response:", response.data); // Debugging log
+
+            if (response.data.error) {
+                setError(response.data.error);
+                setPriceData([]);
+                setPredictedPrice(null);
+            } else {
+                setError(null);
+                setPredictedPrice(response.data.predicted_price);
+                setPriceData(response.data.trend || []);
+            }
         } catch (error) {
             console.error("Error fetching prediction:", error);
+            setError("Failed to fetch data. Check your server.");
         }
     };
 
     const chartData = {
-        labels: priceData.map(data => data.Date),
+        labels: priceData.length > 0 ? priceData.map(data => data.Date || "Unknown") : [""],
         datasets: [
             {
                 label: `${crop} Price Trends`,
-                data: priceData.map(data => data["Price (₹/kg)"]),
+                data: priceData.length > 0 ? priceData.map(data => data["Price (₹/kg)"]) : [0],
                 borderColor: "#27ae60",
                 fill: false,
                 tension: 0.2,
@@ -54,8 +65,10 @@ const Trends = () => {
             </select>
 
             <label>Months Ahead:</label>
-            <input type="number" min="1" max="12" value={months} onChange={(e) => setMonths(e.target.value)} />
+            <input type="number" min="1" max="12" value={months} onChange={(e) => setMonths(Number(e.target.value))} />
 
+            {error && <p className="error">{error}</p>}
+            
             {predictedPrice !== null && (
                 <p>Predicted Price in {months} months: ₹{predictedPrice}/kg</p>
             )}
