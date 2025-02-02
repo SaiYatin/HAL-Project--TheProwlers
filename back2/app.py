@@ -4,7 +4,7 @@ import numpy as np
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load dataset
 df = pd.read_csv("dataset_indian_crop_price.csv")
@@ -34,13 +34,15 @@ def predict_future_price(crop, months):
     avg_demand = filtered_df['Demand Volume (tons)'].mean()
     avg_supply = filtered_df['Supply Volume (tons)'].mean()
     inflation_rate = 0.065  # 6.5% annual inflation
-    
+
     present_price = filtered_df['Price (₹/kg)'].iloc[-1]
     future_price = present_price * ((1 + inflation_rate) ** (months / 12)) * ((avg_demand / avg_supply) ** (months / 12))
     
+    trend_data = filtered_df[['Date', 'Price (₹/kg)']].dropna().to_dict(orient='records')
+    
     return {
         "predicted_price": round(future_price, 2),
-        "trend": filtered_df[['Date', 'Price (₹/kg)']].to_dict(orient='records')
+        "trend": trend_data
     }
 
 @app.route("/predict-price", methods=["GET"])
